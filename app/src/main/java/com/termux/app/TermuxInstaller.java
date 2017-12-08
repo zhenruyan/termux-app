@@ -16,11 +16,13 @@ import android.util.Pair;
 import android.view.WindowManager;
 
 import com.termux.R;
+import com.termux.TheAppContext;
 import com.termux.terminal.EmulatorDebug;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -89,8 +91,9 @@ final class TermuxInstaller {
                     final byte[] buffer = new byte[8096];
                     final List<Pair<String, String>> symlinks = new ArrayList<>(50);
 
-                    final URL zipUrl = determineZipUrl();
-                    try (ZipInputStream zipInput = new ZipInputStream(zipUrl.openStream())) {
+                    final String zipUrl = determineZipUrl();
+                    InputStream inputStream = TheAppContext.getInstance().getAssets().open(zipUrl);
+                    try (ZipInputStream zipInput = new ZipInputStream(inputStream)) {
                         ZipEntry zipEntry;
                         while ((zipEntry = zipInput.getNextEntry()) != null) {
                             if (zipEntry.getName().equals("SYMLINKS.txt")) {
@@ -183,9 +186,9 @@ final class TermuxInstaller {
     }
 
     /** Get bootstrap zip url for this systems cpu architecture. */
-    static URL determineZipUrl() throws MalformedURLException {
+    static String determineZipUrl() throws MalformedURLException {
         String archName = determineTermuxArchName();
-        return new URL("https://termux.net/bootstrap/bootstrap-" + archName + ".zip");
+        return new String("bootstrap-" + archName + ".zip");
     }
 
     private static String determineTermuxArchName() {

@@ -21,6 +21,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:banner="@drawable/banner"
         android:label="@string/application_name"
+        android:name=".TheAppContext"
         android:theme="@style/Theme.Termux"
         android:supportsRtl="false" >
 
