@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
+
     buildToolsVersion '27.0.2'
 
     dependencies {
@@ -14,8 +15,8 @@ android {
         applicationId "com.termux"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 59
-        versionName "0.59"
+        versionCode 60
+        versionName "0.60"
     }
 
     buildTypes {
